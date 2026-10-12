@@ -1,0 +1,46 @@
+{
+  "summary": "First full regression on SvaTWA HMS. Backend: 30/30 pytest tests passed covering auth for all 7 demo accounts, role module access, dashboard stats, patient CRUD + UHID generation + 6m+ new-case flag, cases + prescriptions + pharmacy queue + dispense + stock deduction + auto pharmacy charge, OPD visit tokening + status advance, billing (charge/payment/summary/overpay guard/allow_advance), IPD admit→occupy bed→discharge, masters (CRUD + diagnoses bulk preview+import + medicine create), analytics shape, segment preview + campaign send, AI patient summary (Emergent LLM key works and returned real summary text), and audit log. Frontend: login works for admin and pharmacist, dashboard stat cards (stat-patients, stat-opd-queue, stat-beds, stat-outstanding) render, role-based nav is correctly filtered (super_admin sees all; pharmacist only Dashboard/Patients/Pharmacy/Inventory and is hidden from Billing/Audit/IPD/Masters/Users/OPD), new patient registration end-to-end succeeds (UI_Test_* appears in list immediately), and all protected pages (/analytics /masters /ipd /opd /pharmacy /billing /audit /notifications) load without client-side errors.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "/api/pharmacy/dispense", "issue": "Charge is created only if total > 0 (uses medicine.price). If medicine has price=0 no pharmacy charge is posted; silent to UI. Not a bug per se, but worth noting for billing audit."},
+      {"endpoint": "/api/charges DELETE", "issue": "Only super_admin can delete; a soft-void/reason trail is not kept (hard delete). Consider soft-delete with reason for compliance."},
+      {"endpoint": "/api/ai/patient-summary", "issue": "On LLM exception the error is returned inside summary string with status 200 instead of a dedicated error field — frontend can't distinguish 'AI unavailable' from real summary."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_svatwa_api.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "No blocking issues. Consider: (a) returning explicit {ok:false, error} from /api/ai/patient-summary when LLM fails; (b) soft-delete audit for /api/charges deletions; (c) add role-based guard note in docs that pharmacist can POST /api/medicines (currently can_pharmacy allows pharmacist/inventory/doctor/admin — intended but should be confirmed with product)."
+  ],
+  "critical_code_review_comments": [
+    "server.py CORS: allow_origins=['*'] with allow_credentials=False is fine for Bearer JWT model; good.",
+    "common.py get_current_user also falls back to cookie 'access_token' though no cookie is set anywhere; dead code path — harmless but worth cleaning.",
+    "routes_billing.add_charge is imported cross-module (routes_clinical, routes_ipd, routes_pharmacy). Fine, but could become circular; keep an eye on it.",
+    "routes_ops.dashboard_stats uses regex on created_at string ('^YYYY-MM-DD') to filter by day — relies on ISO prefix; works but querying by date range would be safer.",
+    "routes_pharmacy.dispense allows negative stock prevention per medicine, but no transaction — concurrent dispenses could race (acceptable for MVP).",
+    "routes_clinical.create_visit returns 402 PaymentRequired on dues threshold which is non-standard; frontend should handle 402 explicitly (verify messaging).",
+    "No pagination limit cap on list endpoints (hard-coded .to_list(500/1000/2000)); fine for seed scale.",
+    "routes_masters.create_medicine uses get_current_user then checks role manually instead of require_module('inventory'/'pharmacy') — minor inconsistency with rest of code.",
+    "AI summary endpoint catches all exceptions and returns 200 with error embedded in summary (noted above).",
+    "/api/charges response includes `meta` which could contain anything the caller sends; validate inputs if exposed to non-staff later."
+  ],
+  "updated_files": [
+    "/app/backend/tests/__init__.py",
+    "/app/backend/tests/test_svatwa_api.py"
+  ],
+  "success_rate": {"backend": "100% (30/30)", "frontend": "100% of smoke-tested flows"},
+  "test_credentials": "Loaded from /app/memory/test_credentials.md — all 7 demo accounts verified via /api/auth/login.",
+  "seed_data_creation": "Tests create TEST_ prefixed patients, department masters, diagnoses (TST* codes), medicines, and one campaign (TEST_CAMP). Not cleaned up (left for E1 inspection); low volume so no data pollution risk.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend fully green on run date 2026-10-12. Pytest must be invoked with REACT_APP_BACKEND_URL env var since pytest.ini forces xdist -n 2 --dist loadscope and pre-shadows the env in some shells. Use: `REACT_APP_BACKEND_URL=<url> python -m pytest tests/test_svatwa_api.py -n 0` to run serial, or just plain pytest which uses the configured 2 workers. All demo logins work; auth is Bearer JWT (NOT cookies). Pharmacy flow depends on seeded medicines with stock > 0 — seed.py seeds 12 medicines. AI summary uses Emergent LLM key with Anthropic claude-sonnet-5-5 model and returned ~hundreds of chars of real summary text. OPD visit creation returns 402 when patient dues exceed threshold (default 5000) — pass override_dues=true to bypass.",
+  "rca of the issue": "N/A — no bugs found."
+}
