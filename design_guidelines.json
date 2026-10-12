@@ -1,0 +1,170 @@
+{
+  "project_name": "SvaTWA Psychiatric Hospital Management System",
+  "archetype": "Organic & Earthy / Swiss Clinical Precision",
+  "emotional_tone": "Clean, calm, professional, trustworthy, precise, low-cognitive-load",
+  "app_type": "hybrid_fullstack (Data-dense Clinical & Admin Hospital ERP)",
+  "theme_strategy": {
+    "default_mode": "light",
+    "support_dark_mode": true,
+    "rationale": "Medical and clinical staff require high legibility during long shifts. Light mode provides high-contrast daylight visibility, while night-shift nurses can switch to dark mode. Surfaces are flat solid to avoid refraction of critical health parameters."
+  },
+  "typography": {
+    "headings": {
+      "font_family": "Manrope, Outfit, sans-serif",
+      "forbidden_heading_fonts": ["Inter", "Space Grotesk", "Roboto"],
+      "weights": {
+        "h1": "font-bold text-3xl sm:text-4xl tracking-tight leading-tight",
+        "h2": "font-semibold text-2xl sm:text-3xl tracking-tight",
+        "h3": "font-medium text-xl sm:text-2xl",
+        "h4": "font-medium text-base sm:text-lg text-slate-900 dark:text-slate-100"
+      }
+    },
+    "body": {
+      "font_family": "IBM Plex Sans, DM Sans, sans-serif",
+      "style": "text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300"
+    },
+    "labels_and_overlines": {
+      "style": "text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400"
+    },
+    "mono_data": {
+      "font_family": "JetBrains Mono, Source Code Pro, monospace",
+      "style": "text-xs font-mono font-medium tracking-normal text-slate-800 dark:text-slate-200"
+    }
+  },
+  "colors": {
+    "palette": {
+      "primary": {
+        "DEFAULT": "#0F172A",
+        "hover": "#1E293B",
+        "light": "#F1F5F9"
+      },
+      "brand_clinical": {
+        "DEFAULT": "#0D9488",
+        "hover": "#0F766E",
+        "light": "#CCFBF1"
+      },
+      "secondary": {
+        "DEFAULT": "#2563EB",
+        "hover": "#1D4ED8",
+        "light": "#DBEAFE"
+      },
+      "background": {
+        "light": "#F8FAFC",
+        "dark": "#090D16"
+      },
+      "surface": {
+        "light": "#FFFFFF",
+        "dark": "#111827",
+        "border_light": "#E2E8F0",
+        "border_dark": "#1F2937"
+      },
+      "psychiatric_risk_levels": {
+        "low": {
+          "bg": "#ECFDF5",
+          "text": "#047857",
+          "border": "#A7F3D0"
+        },
+        "moderate": {
+          "bg": "#FFFBEB",
+          "text": "#B45309",
+          "border": "#FDE68A"
+        },
+        "high": {
+          "bg": "#FEF2F2",
+          "text": "#B91C1C",
+          "border": "#FECACA"
+        },
+        "critical_alert": {
+          "bg": "#450A0A",
+          "text": "#FCA5A5",
+          "border": "#991B1B"
+        }
+      }
+    },
+    "forbidden_colors": [
+      "#1B93A4",
+      "#7351B7"
+    ],
+    "contrast_rules": "Maintain minimum 4.5:1 contrast ratio across all text elements. Clinical data badges must use high-contrast text color explicitly paired with light background pills."
+  },
+  "surface_and_layout_strategy": {
+    "card_style": "Solid background with delicate 1px border. Never use translucent glassmorphism for medical data tables or patient vitals to avoid refraction and data misreading.",
+    "bento_density_mode": "MODE B: High Density Grid (Dashboards/Analytics/Clinical Timeline). Base grid: grid-cols-1 md:grid-cols-3 lg:grid-cols-4. Spacing: gap-4 or gap-6.",
+    "patient_360_layout": "Header banner with core patient demographics + Suicidality/Risk Indicator -> Left column 4-col span (Vitals, Active Medications, MSE Radar) -> Right column 8-col span (Timeline, DSM-5 Diagnosis, Clinical Notes, Treatment Plan).",
+    "opd_ipd_consoles": "Cardless dense matrix layout for beds & appointment tokens with quick filter tabs and status chips."
+  },
+  "motion_and_microinteractions": {
+    "philosophy": "Calm, functional, instant feedback. Avoid ornamental floating shapes or distracting bouncy physics.",
+    "hover_transitions": "transition-colors duration-150 ease-in-out",
+    "modal_transitions": "transition-opacity duration-200 ease-out",
+    "accessibility": "Respect prefers-reduced-motion media query. Disable tab animations when reduced motion is preferred."
+  },
+  "components_and_structure": {
+    "navigation": {
+      "type": "Responsive Sidebar + Top Clinical Context Bar",
+      "mobile": "Sheet slide-over navigation with sticky touch target items",
+      "role_switcher": "Dropdown at top sidebar to toggle roles: Admin, Psychiatrist, Psychologist, Nurse, Receptionist, Pharmacist, Billing Officer"
+    },
+    "clinical_modules": [
+      "Role-Based Dashboard",
+      "Patient 360 & Case Management",
+      "OPD Token Queue & Live Board",
+      "IPD Room / Bed Allocation Console",
+      "Psychiatric Assessment & MSE (Mental Status Examination)",
+      "Digital Prescription Builder (DSM-5 / ICD-11)",
+      "Pharmacy Dispensing & Inventory",
+      "Diagnostics & Lab Reports",
+      "Billing, Invoices & Claims",
+      "Expenses & Accounts",
+      "Surveys & Campaign Notifications",
+      "Analytics & Statutory Reports",
+      "Masters CRUD Tables",
+      "Settings & Access Permissions"
+    ],
+    "printable_documents": [
+      "Prescription Document (A4 format with header, Rx table, warning signatures)",
+      "Discharge Summary (Psychiatric progress notes, follow-up date, emergency contact)",
+      "Tax Billing Invoice (Itemized breakdown, tax details, patient copy)"
+    ]
+  },
+  "image_urls": [
+    {
+      "category": "Doctors & Psychiatrists",
+      "url": "https://images.unsplash.com/photo-1612276529624-33e7430ebce8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODl8MHwxfHNlYXJjaHwyfHxwc3ljaGlhdHJpc3QlMjBob3NwaXRhbCUyMGRvY3RvciUyMG1lZGljYWwlMjBwcm9mZXNzaW9uYWx8ZW58MHx8fGJsdWV8MTc5MTc4NTUzOHww&ixlib=rb-4.1.0&q=85",
+      "description": "Senior Psychiatrist Dr. Marcus Vance"
+    },
+    {
+      "category": "Doctors & Psychiatrists",
+      "url": "https://images.unsplash.com/photo-1612636321938-2a60d4febfae?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODl8MHwxfHNlYXJjaHwxfHxwc3ljaGlhdHJpc3QlMjBob3NwaXRhbCUyMGRvY3RvciUyMG1lZGljYWwlMjBwcm9mZXNzaW9uYWx8ZW58MHx8fGJsdWV8MTc5MTc4NTUzOHww&ixlib=rb-4.1.0&q=85",
+      "description": "Clinical Psychologist Dr. Anita Sharma"
+    },
+    {
+      "category": "Clinical Consultation",
+      "url": "https://images.unsplash.com/photo-1758691461990-03b49d969495?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwxfHxkb2N0b3IlMjBjb25zdWx0YXRpb24lMjBwYXRpZW50JTIwY2xpbmljfGVufDB8fHx8MTc5MTc4NTU0Nnww&ixlib=rb-4.1.0&q=85",
+      "description": "Psychiatric clinical documentation session"
+    },
+    {
+      "category": "Therapy & Patient Care",
+      "url": "https://images.unsplash.com/photo-1758691463198-dc663b8a64e4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwyfHxkb2N0b3IlMjBjb25zdWx0YXRpb24lMjBwYXRpZW50JTIwY2xpbmljfGVufDB8fHx8MTc5MTc4NTU0Nnww&ixlib=rb-4.1.0&q=85",
+      "description": "One-on-one therapy consultation room"
+    }
+  ],
+  "testing_and_automation": {
+    "mandatory_data_testid_rule": "ALL interactive components (buttons, search inputs, tab switches, dropdown items, role switchers, table rows, bed allocation cards, print triggers, modal actions) MUST feature explicit kebab-case data-testid attributes.",
+    "examples": [
+      "data-testid=\"role-switcher-select\"",
+      "data-testid=\"patient-search-input\"",
+      "data-testid=\"opd-queue-token-card-101\"",
+      "data-testid=\"print-prescription-btn\"",
+      "data-testid=\"risk-assessment-level-high\"",
+      "data-testid=\"bed-matrix-room-204\""
+    ]
+  },
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "Ensure SvaTWA feels like a genuine, high-precision psychiatric hospital ERP with rich mock clinical data (ICD-11 codes, DSM-5 criteria, Hamilton Depression Rating Scale, MSE categories, psychotropic medication schedules).",
+    "Never produce empty or plain states without functional tools; populate mock patient records with realistic psychiatric histories.",
+    "Provide clear role switching mechanism at top so users can test as Psychiatrist, Psychologist, Nurse, Pharmacist, Billing Officer, Receptionist, or Admin.",
+    "Include printable views formatted cleanly with window.print() CSS media queries for Prescriptions, Discharge Summaries, and Invoices.",
+    "Strictly follow data-testid conventions for all actions and elements."
+  ]
+}
