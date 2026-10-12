@@ -12,7 +12,7 @@ from common import db, get_current_user  # noqa: E402
 import routes_auth, routes_masters, routes_clinical, routes_pharmacy, routes_ipd, routes_billing, routes_ops  # noqa: E402
 from seed import run_seed  # noqa: E402
 
-app = FastAPI(title="SvaTWA HMS")
+app = FastAPI(title="SvaTWA HMS", redoc_url=None, docs_url=None, openapi_url=None)
 api_router = APIRouter(prefix="/api")
 
 
